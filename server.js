@@ -45,6 +45,16 @@ app.use('/api/v1/borrow', borrowRoutes);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
+
+app.get("/",(req,res)=>{
+  res.send(<h1>Welcome To Back End Host Api</h1>,
+    <p>To Check All Book </p>,
+    <h2>Type /checkbook</h2>
+  )
+})
+
+
+
 const port = process.env.PORT || 5000;
 const start = async () => {
   try {
