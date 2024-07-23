@@ -14,6 +14,16 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./db/connect");
 const { rateLimiter } = require("./utils/Ratelimite");
 
+
+// Root route
+app.get("/", (req, res) => {
+  res.send(`
+    <h1>Welcome To Back End Host Api</h1>
+    <p>To Check All Books</p>
+    <h2>Type /checkbook</h2>
+  `);
+});
+
 // Require Routers
 const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
@@ -46,12 +56,6 @@ app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 
-app.get("/",(req,res)=>{
-  res.send(<h1>Welcome To Back End Host Api</h1>,
-    <p>To Check All Book </p>,
-    <h2>Type /checkbook</h2>
-  )
-})
 
 
 
