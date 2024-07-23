@@ -7,10 +7,11 @@ const {
 const { upload } = require('../utils/uploadController');
 
 const router = express.Router();
-
+router.get('/checkbook', getBooks);
 router.route('/').get(authenticateUser, getBooks).post(authenticateUser, authorizePermissions('Author'), upload.single('image'), createBook);
 router.route('/:id').get(authenticateUser, getBookById).put(authenticateUser, authorizePermissions('Author'), updateBook).delete(authenticateUser, authorizePermissions('Author'), deleteBook);
 
-router.get('/checkbook', getBooks);
+
 
 module.exports = router;
+ 
