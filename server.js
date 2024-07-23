@@ -13,22 +13,15 @@ const cookieParser = require("cookie-parser");
 // Require Database
 const connectDB = require("./db/connect");
 const { rateLimiter } = require("./utils/Ratelimite");
+const Book = require('./models/Book');
 
 
-// Root route
-app.get("/", (req, res) => {
-  res.send(`
-    <h1>Welcome To Back End Host Api</h1>
-    <p>To Check All Books</p>
-    <h2>Type /checkbook</h2>
-  `);
-});
 
 // Require Routers
 const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const bookRouter = require("./routes/bookRoutes");
-const libraryRoutes= require("./routes/libraryRoutes");
+const libraryRoutes = require("./routes/libraryRoutes");
 const borrowRoutes = require('./routes/borrowRoutes');
 // Require Middleware
 const notFoundMiddleware = require("./middleware/not-found");
@@ -41,15 +34,25 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.urlencoded({ extended: true }));
 app.use(rateLimiter);
 
+// Root route
+app.get("/", (req, res) => {
+  res.send(`
+    <h1>Welcome To Back End Host Api</h1>
+    <p>To Check All Books</p>
+    <h2>Click</h2>
+    <a href="https://book-keeping-service.onrender.com/api/v1/book/checkbook">https://book-keeping-service.onrender.com/api/v1/book/checkbook</a>
+  `);
+});
 
- 
+app.get('/checkbook', bookRouter);
+
 
 // Invoke Routers
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", userRouter); 
-app.use("/api/v1/book", bookRouter); 
-app.use('/api/v1/libraries', libraryRoutes); 
-app.use('/api/v1/borrow', borrowRoutes); 
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/book", bookRouter);
+app.use('/api/v1/libraries', libraryRoutes);
+app.use('/api/v1/borrow', borrowRoutes);
 
 // Invoke Middleware
 app.use(notFoundMiddleware);
@@ -69,7 +72,7 @@ const start = async () => {
       console.log(`🚀 Server is listening on port ${port}...`)
     );
   } catch (error) {
-    console.log(error); 
+    console.log(error);
   }
 };
 
